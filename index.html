@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="./table.css" />
+    </head>
+    <body>
+        <div class="container">
+            <table class="table-client th-cursor" id="table-client">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Order ID</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2017-11-29 01:20</td>
+                        <td>200398</td>
+                        <td>X phoneX 64GB Grey</td>
+                        <td>$100.00</td>
+                        <td>2</td>
+                        <td>1000.00</td>
+                    </tr>
+                    <tr>
+                        <td>2017-09-29 01:20</td>
+                        <td>200398</td>
+                        <td>Aamsung Glaxy 128GB Grey</td>
+                        <td>$1000.00</td>
+                        <td>1</td>
+                        <td>999.00</td>
+                    </tr>
+                    <tr>
+                        <td>2017-09-29 01:20</td>
+                        <td>200398</td>
+                        <td>Samsung Glaxy 128GB Grey</td>
+                        <td>$1000.00</td>
+                        <td>1</td>
+                        <td>999.00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <script>
+            class TableClient {
+                constructor(id, { setting, direction }) {
+                    this.setting = setting;
+                    this.tableClient = document.querySelector(id);
+                    this.direction = this.direction ? this.direction : 'desc';
+                }
+
+                sort() {
+                    this.tableClient.addEventListener('click', (e) => {
+                        if (e.target.tagName != 'TH') return;
+
+                        let th = e.target;
+
+                        this.currentTarget = th;
+
+                        let cellIndex = th.cellIndex;
+
+                        this.sortGrid(cellIndex, th);
+                    });
+                }
+
+                sortGrid(cellIndex, el) {
+                    let tbody = this.tableClient.querySelector('tbody');
+
+                    let rows = Array.from(tbody.rows);
+
+                    let type = el.dataset.type;
+
+                    let ignore = this.setting.ignore.join('');
+
+                    let compare;
+
+                    compare = (a, b) => {
+                        if (this.direction === 'desc') {
+                            return a.cells[cellIndex].innerHTML >
+                                b.cells[cellIndex].innerHTML
+                                ? 1
+                                : -1;
+                        }
+                        return b.cells[cellIndex].innerHTML >
+                            a.cells[cellIndex].innerHTML
+                            ? 1
+                            : -1;
+                    };
+
+                    this.direction = this.direction === 'desc' ? 'asc' : 'desc';
+                    rows.sort(compare);
+                    tbody.append(...rows);
+                }
+            }
+
+            let sortable = new TableClient('#table-client', {
+                setting: { type: 'auto', ignore: ['$'] },
+                direction: 'asc',
+            });
+
+            sortable.sort();
+        </script>
+    </body>
+</html>

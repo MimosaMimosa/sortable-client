@@ -1,0 +1,36 @@
+.table-client {
+    width: 100%;
+    max-width: 1200px;
+    border-collapse: collapse;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.table-client thead {
+    border: 1px;
+    border-top-left-radius: 10px;
+}
+
+.table-client th {
+    background-color: #747070;
+    color: #ffffff;
+    text-align: start;
+    padding: 10px 10px;;
+}
+
+.table-client.th-cursor th {
+    cursor: pointer;
+}
+
+.table-client tr td {
+    padding: 10px 10px;
+}
+
+.table-client tr:nth-child(even) {
+    background-color:  #dddddd;
+}
+
